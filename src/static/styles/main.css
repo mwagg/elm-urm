@@ -1,0 +1,40 @@
+.header {
+  background-color: #2d3e50;
+  color: #fff;
+}
+
+.header h1 {
+  margin: 0;
+  padding: 0.5em;
+}
+
+.preset-programs {
+  background-color: #2d3e50;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  padding-top: 4em;
+  width: 15em;
+}
+
+.preset-programs h3 {
+  color: #d6dade;
+  margin-left: 0.5em;
+}
+
+.main-body {
+  margin-left: 15em;
+}
+
+.machine-visualisation {
+}
+
+.machine-visualisation-component {
+  padding: 1em 2em;
+  box-sizing: border-box;
+}
+
+.next-command {
+  background: #c52828;
+}
