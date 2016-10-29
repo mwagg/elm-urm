@@ -5,6 +5,7 @@ import Expect exposing (Expectation)
 import Urm exposing (Command(..))
 import Array exposing (Array)
 import Test
+import Programs
 
 
 expectRanState : Urm.State -> Array Int -> Int -> Bool -> Expectation
@@ -49,12 +50,12 @@ all =
                         state =
                             Urm.init Array.empty (Array.fromList [ Exit ])
                     in
-                        expectSteppedState state Array.empty 0 True
+                        expectSteppedState state Array.empty 1 True
             , test "inc increments register and sets program counter" <|
                 \() ->
                     let
                         program =
-                            Array.fromList [ Inc 0 1, Exit ]
+                            Array.fromList [ Inc 1 2, Exit ]
 
                         registers =
                             Array.fromList [ 0 ]
@@ -62,12 +63,12 @@ all =
                         state =
                             Urm.init registers program
                     in
-                        expectSteppedState state (Array.fromList [ 1 ]) 1 False
+                        expectSteppedState state (Array.fromList [ 1 ]) 2 False
             , test "deb decrements and sets program counter to first index if register greater than 0" <|
                 \() ->
                     let
                         program =
-                            Array.fromList [ Deb 0 1 2, Exit, Urm.Exit ]
+                            Array.fromList [ Deb 1 1 2, Exit ]
 
                         registers =
                             Array.fromList [ 1 ]
@@ -80,7 +81,7 @@ all =
                 \() ->
                     let
                         program =
-                            Array.fromList [ Deb 0 1 2, Exit, Urm.Exit ]
+                            Array.fromList [ Deb 1 1 2, Exit ]
 
                         registers =
                             Array.fromList [ 0 ]
@@ -94,21 +95,12 @@ all =
             [ test "addition program" <|
                 \() ->
                     let
-                        registers =
-                            Array.fromList [ 0, 2, 3 ]
-
-                        program =
-                            Array.fromList
-                                [ Deb 1 1 2
-                                , Inc 0 0
-                                , Deb 2 3 4
-                                , Inc 0 2
-                                , Exit
-                                ]
+                        ( registers, program ) =
+                            Programs.get "addition"
 
                         state =
                             Urm.init registers program
                     in
-                        expectRanState state (Array.fromList [ 5, 0, 0 ]) 4 True
+                        expectRanState state (Array.fromList [ 5, 0, 0 ]) 5 True
             ]
         ]

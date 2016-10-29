@@ -1,7 +1,6 @@
-module Urm exposing (init, step, run, Command(..), State)
+module Urm exposing (init, step, run, Command(..), State, empty)
 
 import Array exposing (Array)
-import Debug
 
 
 type Command
@@ -18,11 +17,16 @@ type alias State =
     }
 
 
+empty : State
+empty =
+    init Array.empty (Array.fromList [ Exit ])
+
+
 init : Array Int -> Array Command -> State
 init registers program =
     { registers = registers
     , program = program
-    , programCounter = 0
+    , programCounter = 1
     , exited = False
     }
 
@@ -75,18 +79,24 @@ step state =
 incrementRegister : Array Int -> Int -> Array Int
 incrementRegister registers index =
     let
+        arrayIndex =
+            index - 1
+
         value =
-            Array.get index registers
+            Array.get arrayIndex registers
                 |> Maybe.withDefault 0
     in
-        Array.set index (value + 1) registers
+        Array.set arrayIndex (value + 1) registers
 
 
 decrementRegister : Array Int -> Int -> ( Array Int, Bool )
 decrementRegister registers index =
     let
+        arrayIndex =
+            index - 1
+
         value =
-            Array.get index registers
+            Array.get arrayIndex registers
                 |> Maybe.withDefault 0
 
         decremented =
@@ -98,10 +108,14 @@ decrementRegister registers index =
             else
                 0
     in
-        ( Array.set index newValue registers, decremented )
+        ( Array.set arrayIndex newValue registers, decremented )
 
 
 nextCommand : State -> Command
 nextCommand state =
-    Array.get state.programCounter state.program
-        |> Maybe.withDefault Exit
+    let
+        cmdIndex =
+            state.programCounter - 1
+    in
+        Array.get cmdIndex state.program
+            |> Maybe.withDefault Exit
