@@ -1,14 +1,14 @@
-module UrmVisualiser exposing (..)
+module UrmVisualiser exposing (UrmVisualiser, update, Msg(..))
 
 import Urm
 import Programs
 import Time exposing (Time)
 
 
--- Model
+-- UrmVisualiser
 
 
-type alias Model =
+type alias UrmVisualiser =
     { machineState : Urm.State
     , autoStep : Bool
     }
@@ -26,7 +26,7 @@ type Msg
     | Tick Time
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> UrmVisualiser -> ( UrmVisualiser, Cmd Msg )
 update msg model =
     case msg of
         ChangeProgram programName ->
@@ -48,16 +48,16 @@ update msg model =
                 ( { model | machineState = Urm.step model.machineState }, Cmd.none )
 
 
-changeProgram : Model -> String -> ( Model, Cmd Msg )
+changeProgram : UrmVisualiser -> String -> ( UrmVisualiser, Cmd Msg )
 changeProgram model programName =
     let
         ( registers, program ) =
             Programs.get programName
 
-        newModel =
+        newUrmVisualiser =
             { model
                 | machineState = Urm.init registers program
                 , autoStep = False
             }
     in
-        ( newModel, Cmd.none )
+        ( newUrmVisualiser, Cmd.none )

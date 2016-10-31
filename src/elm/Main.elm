@@ -1,6 +1,6 @@
 module Main exposing (..)
 
-import UrmVisualiser exposing (Model, Msg(..))
+import UrmVisualiser exposing (UrmVisualiser, Msg(..), update)
 import Html.App as App
 import Html exposing (Html)
 import Html.Attributes as Attrs
@@ -22,7 +22,7 @@ main =
         }
 
 
-init : ( Model, Cmd Msg )
+init : ( UrmVisualiser, Cmd Msg )
 init =
     ( { machineState = Urm.empty
       , autoStep = False
@@ -31,7 +31,7 @@ init =
     )
 
 
-subscriptions : Model -> Sub Msg
+subscriptions : UrmVisualiser -> Sub Msg
 subscriptions model =
     Time.every (500 * Time.millisecond) Tick
 
@@ -40,7 +40,7 @@ subscriptions model =
 -- View
 
 
-view : Model -> Html Msg
+view : UrmVisualiser -> Html Msg
 view model =
     Html.div []
         [ Html.div []
