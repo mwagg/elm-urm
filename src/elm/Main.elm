@@ -33,7 +33,7 @@ init =
 
 subscriptions : UrmVisualiser -> Sub Msg
 subscriptions model =
-    Time.every (500 * Time.millisecond) Tick
+    Time.every (100 * Time.millisecond) Tick
 
 
 
