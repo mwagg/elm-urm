@@ -1,9 +1,9 @@
-module Urm exposing (init, step, run, Command(..), State, empty)
+module Urm exposing (init, step, run, Instruction(..), State, empty)
 
 import Array exposing (Array)
 
 
-type Command
+type Instruction
     = Exit
     | Inc Int Int
     | Deb Int Int Int
@@ -11,7 +11,7 @@ type Command
 
 type alias State =
     { registers : Array Int
-    , program : Array Command
+    , program : Array Instruction
     , exited : Bool
     , programCounter : Int
     }
@@ -22,7 +22,7 @@ empty =
     init Array.empty (Array.fromList [ Exit ])
 
 
-init : Array Int -> Array Command -> State
+init : Array Int -> Array Instruction -> State
 init registers program =
     { registers = registers
     , program = program
@@ -111,7 +111,7 @@ decrementRegister registers index =
         ( Array.set arrayIndex newValue registers, decremented )
 
 
-nextCommand : State -> Command
+nextCommand : State -> Instruction
 nextCommand state =
     let
         cmdIndex =

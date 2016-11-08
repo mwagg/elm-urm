@@ -1,11 +1,11 @@
 module Programs exposing (get, names)
 
-import Urm exposing (Command(..))
+import Urm exposing (Instruction(..))
 import Dict exposing (Dict)
 import Array exposing (Array)
 
 
-zeroOutRegister : Int -> Int -> Urm.Command
+zeroOutRegister : Int -> Int -> Urm.Instruction
 zeroOutRegister register cmdIndex =
     let
         cmdIndexWhenDone =
@@ -17,7 +17,7 @@ zeroOutRegister register cmdIndex =
 {-| Move the contents of register 1 to register 2,
     zeroing out register 2 first
 -}
-move : ( Array Int, Array Urm.Command )
+move : ( Array Int, Array Urm.Instruction )
 move =
     let
         registers =
@@ -39,7 +39,7 @@ move =
     to indicate negative values. Zero in register 2 indicates
     the value in register 1 is positive, 1 indicates negative
 -}
-subtract : Int -> Int -> ( Array Int, Array Urm.Command )
+subtract : Int -> Int -> ( Array Int, Array Urm.Instruction )
 subtract a b =
     let
         registers =
@@ -66,7 +66,7 @@ subtract a b =
 {-| Multiplies the value of register 3 by the value of
     register 4
 -}
-multiplication : ( Array Int, Array Urm.Command )
+multiplication : ( Array Int, Array Urm.Instruction )
 multiplication =
     let
         registers =
@@ -91,7 +91,7 @@ multiplication =
 {-| Copy the contents of register 1 to register 2,
     zeroing out register 2 first
 -}
-copy : ( Array Int, Array Urm.Command )
+copy : ( Array Int, Array Urm.Instruction )
 copy =
     let
         registers =
@@ -112,7 +112,7 @@ copy =
         ( registers, program )
 
 
-incrementTwice : ( Array Int, Array Urm.Command )
+incrementTwice : ( Array Int, Array Urm.Instruction )
 incrementTwice =
     let
         registers =
@@ -128,7 +128,7 @@ incrementTwice =
         ( registers, program )
 
 
-decrementTwice : ( Array Int, Array Urm.Command )
+decrementTwice : ( Array Int, Array Urm.Instruction )
 decrementTwice =
     let
         registers =
@@ -143,7 +143,7 @@ decrementTwice =
         ( registers, program )
 
 
-addition : ( Array Int, Array Urm.Command )
+addition : ( Array Int, Array Urm.Instruction )
 addition =
     let
         registers =
@@ -161,7 +161,7 @@ addition =
         ( registers, program )
 
 
-nonDestructiveAddition : ( Array Int, Array Urm.Command )
+nonDestructiveAddition : ( Array Int, Array Urm.Instruction )
 nonDestructiveAddition =
     let
         registers =
@@ -185,7 +185,7 @@ nonDestructiveAddition =
         ( registers, program )
 
 
-programs : Dict String ( Array Int, Array Urm.Command )
+programs : Dict String ( Array Int, Array Urm.Instruction )
 programs =
     Dict.fromList
         [ ( "move", move )
@@ -200,7 +200,7 @@ programs =
         ]
 
 
-get : String -> ( Array Int, Array Urm.Command )
+get : String -> ( Array Int, Array Urm.Instruction )
 get name =
     Dict.get name programs
         |> Maybe.withDefault ( Array.empty, Array.fromList [ Exit ] )

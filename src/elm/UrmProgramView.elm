@@ -2,7 +2,7 @@ module UrmProgramView exposing (root)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Urm exposing (Command(..))
+import Urm exposing (Instruction(..))
 import UrmVisualiser exposing (Msg)
 import Array exposing (Array)
 
@@ -15,14 +15,14 @@ root state =
         ]
 
 
-programView : Array Urm.Command -> Int -> Html Msg
+programView : Array Urm.Instruction -> Int -> Html Msg
 programView program programCounter =
     let
         nextCmdIndex =
             programCounter - 1
 
         header =
-            [ "#", "command", "register", "next", "branch" ]
+            [ "#", "instruction", "register", "next", "branch" ]
                 |> List.map (\s -> th [] [ text s ])
 
         commands =
@@ -35,7 +35,7 @@ programView program programCounter =
             ]
 
 
-commandRow : Int -> Int -> Command -> Html Msg
+commandRow : Int -> Int -> Instruction -> Html Msg
 commandRow nextIndex index cmd =
     let
         tdHtml =
@@ -51,7 +51,7 @@ commandRow nextIndex index cmd =
         tr [ rowCssClass ] tdsHtml
 
 
-commandRowValues : Int -> Command -> List String
+commandRowValues : Int -> Instruction -> List String
 commandRowValues index cmd =
     let
         values =

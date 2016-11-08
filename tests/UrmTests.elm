@@ -2,7 +2,7 @@ module UrmTests exposing (..)
 
 import Test exposing (..)
 import Expect exposing (Expectation)
-import Urm exposing (Command(..))
+import Urm exposing (Instruction(..))
 import Array exposing (Array)
 import Test
 import Programs
