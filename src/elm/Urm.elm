@@ -47,15 +47,15 @@ step : State -> State
 step state =
     let
         cmd =
-            nextCommand state
+            nextInstruction state
     in
         case cmd of
             Exit ->
                 { state | exited = True }
 
-            Inc register cmdIndex ->
+            Inc register nextInstr ->
                 { state
-                    | programCounter = cmdIndex
+                    | programCounter = nextInstr
                     , registers = incrementRegister state.registers register
                 }
 
@@ -64,14 +64,14 @@ step state =
                     ( newRegisters, decremented ) =
                         decrementRegister state.registers register
 
-                    nextCmdIndex =
+                    nextInstr =
                         if decremented then
                             successIndex
                         else
                             branchIndex
                 in
                     { state
-                        | programCounter = nextCmdIndex
+                        | programCounter = nextInstr
                         , registers = newRegisters
                     }
 
@@ -111,8 +111,8 @@ decrementRegister registers index =
         ( Array.set arrayIndex newValue registers, decremented )
 
 
-nextCommand : State -> Instruction
-nextCommand state =
+nextInstruction : State -> Instruction
+nextInstruction state =
     let
         cmdIndex =
             state.programCounter - 1
