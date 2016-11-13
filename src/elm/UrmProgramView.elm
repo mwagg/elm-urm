@@ -5,14 +5,13 @@ import Html.Attributes exposing (..)
 import Urm exposing (Instruction(..))
 import UrmVisualiser exposing (Msg)
 import Array exposing (Array)
+import UrmUI
 
 
 root : Urm.State -> Html Msg
 root state =
-    div [ class "urm-program" ]
-        [ h3 [] [ text "Program" ]
-        , programView state.program state.programCounter
-        ]
+    programView state.program state.programCounter
+        |> UrmUI.section "Program" "urm-program"
 
 
 programView : Array Urm.Instruction -> Int -> Html Msg
@@ -23,15 +22,15 @@ programView program programCounter =
 
         header =
             [ "#", "instruction", "register", "next", "branch" ]
-                |> List.map (\s -> th [] [ text s ])
+                |> List.map (\s -> th [ class "urm-program__header" ] [ text s ])
 
         commands =
             Array.toList program
                 |> List.indexedMap (commandRow nextCmdIndex)
     in
-        table [ class "pure-table" ]
-            [ thead [] [ tr [] header ]
-            , tbody [] commands
+        table [ class "urm-program__table" ]
+            [ thead [ class "urm-program__headers" ] [ tr [] header ]
+            , tbody [ class "urm-program__instructions" ] commands
             ]
 
 
@@ -39,14 +38,14 @@ commandRow : Int -> Int -> Instruction -> Html Msg
 commandRow nextIndex index cmd =
     let
         tdHtml =
-            \v -> td [] [ text v ]
+            \v -> td [ class "urm-program__instruction" ] [ text v ]
 
         tdsHtml =
             commandRowValues index cmd
                 |> List.map tdHtml
 
         rowCssClass =
-            classList [ ( "next-command", nextIndex == index ) ]
+            classList [ ( "urm-program__instructions--next", nextIndex == index ) ]
     in
         tr [ rowCssClass ] tdsHtml
 

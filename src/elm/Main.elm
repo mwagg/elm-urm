@@ -43,13 +43,9 @@ subscriptions model =
 view : UrmVisualiser -> Html Msg
 view model =
     Html.div []
-        [ Html.div []
-            [ PresetProgramsView.root
-            , Html.div [ Attrs.class "main-body" ]
-                [ header
-                , machineVisualisationView model.machineState
-                ]
-            ]
+        [ header
+        , PresetProgramsView.root
+        , machineVisualisationView model.machineState
         ]
 
 
@@ -57,7 +53,7 @@ header : Html Msg
 header =
     Html.div [ Attrs.class "header" ]
         [ Html.h1 []
-            [ Html.text "Unlimited Register Machine" ]
+            [ Html.text "Elm Unlimited Register Machine" ]
         ]
 
 
@@ -65,10 +61,8 @@ machineVisualisationView : Urm.State -> Html Msg
 machineVisualisationView state =
     Html.div
         [ Attrs.class "machine-visualisation" ]
-        [ Html.div [ Attrs.class "pure-g" ]
-            [ Html.div [ Attrs.class "pure-u-1-2 machine-visualisation-component" ] [ UrmRegistersView.root state ]
-            , Html.div [ Attrs.class "pure-u-1-2 machine-visualisation-component" ] [ UrmProgramView.root state ]
-            ]
+        [ Html.div [ Attrs.class "machine-visualisation__component" ] [ UrmRegistersView.root state ]
+        , Html.div [ Attrs.class "machine-visualisation__component" ] [ UrmProgramView.root state ]
         , programControl
         ]
 

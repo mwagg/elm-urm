@@ -1,5 +1,5 @@
-require('./styles/pure-min.css');
+require('./styles/normalize.css');
 require('./styles/main.css');
 
 var Elm = require('../elm/Main');
-Elm.Main.embed(document.getElementById('main'));
+Elm.Main.embed(document.getElementById('elm-urm'));

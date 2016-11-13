@@ -1,40 +1,108 @@
-.header {
-  background-color: #2d3e50;
-  color: #fff;
+body {
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  background-color: #fdfdfd;
+  color: #222;
 }
 
-.header h1 {
+.elm-urm {
+  width: auto;
+  margin: 0 2em;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: normal;
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid #dededf;
+}
+
+ol, ul {
   margin: 0;
-  padding: 0.5em;
+  padding: 0;
 }
 
-.preset-programs {
-  background-color: #2d3e50;
-  color: #fff;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  padding-top: 4em;
-  width: 15em;
+li {
+  list-style: none;
 }
 
-.preset-programs h3 {
-  color: #d6dade;
-  margin-left: 0.5em;
+.preset-programs__name {
+  display: inline-block;
+  width: 13em;
 }
 
-.main-body {
-  margin-left: 15em;
+.urm-section {
+  margin: 2em 0 0 0;
 }
 
-.machine-visualisation {
+.urm-section__header {
+  border: solid 1px #dedede;
+  background-color: white;
+  border-top-right-radius: 0.3em;
+  border-top-left-radius: 0.3em;
 }
 
-.machine-visualisation-component {
-  padding: 1em 2em;
-  box-sizing: border-box;
+.urm-section__header h2 {
+  color: #999;
+  font-size: 0.9em;
+  margin-left: 1em;
+  text-transform: uppercase;
 }
 
-.next-command {
-  background: #c52828;
+.urm-section__content {
+  background: #fafafa;
+  border: 1px solid #dedede;
+  border-bottom-right-radius: 0.3em;
+  border-bottom-left-radius: 0.3em;
+  border-top: none;
+  padding: 1em;
 }
+
+.machine-visualisation__component {
+  width: 50%;
+  float: left;
+}
+
+.urm-registers__register {
+  display: inline-block;
+  margin: 0;
+}
+
+.urm-registers__index {
+  text-shadow: 2px 2px 1px rgba(0,0,0,0.3);
+  color: #dae9ef;
+  background-color: #186097;
+  padding: 0.5em 0.8em;
+  border-bottom: 1px solid #317eb7;
+}
+
+.urm-registers__value {
+  background-color: #d7e5ef;
+  padding: 0.5em 0.8em;
+}
+
+.urm-program__table {
+  width: 100%;
+}
+
+.urm-program__headers {
+  color: #dae9ef;
+  background-color: #186097;
+  text-shadow: 2px 2px 1px rgba(0,0,0,0.3);
+}
+
+.urm-program__header {
+  padding: 0.5em 0.8em;
+}
+
+.urm-program__instructions {
+  background-color: #d7e5ef;
+}
+
+.urm-program__instructions--next {
+  background-color: #83bde8;
+}
+
+.urm-program__instruction {
+  padding: 0.5em 0.8em;
+}
+

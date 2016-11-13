@@ -5,6 +5,7 @@ import UrmVisualiser exposing (Msg(ChangeProgram))
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import UrmUI
 
 
 root : Html Msg
@@ -13,28 +14,19 @@ root =
         programsHtml =
             List.map programView Programs.names
 
-        classes =
-            classList
-                [ ( "preset-programs", True )
-                ]
-
-        heading =
-            h3 [] [ text "Preset programs" ]
-
         menu =
-            div [ class "pure-menu" ]
-                [ ul [ class "pure-menu-list" ] programsHtml ]
+            ol [ class "urm-list" ] programsHtml
     in
-        Html.div [ classes ] [ heading, menu ]
+        UrmUI.section "Programs" "preset-programs" menu
 
 
 programView : String -> Html Msg
 programView name =
-    li [ class "pure-menu-item" ]
-        [ a
-            [ href ("#" ++ name)
-            , class "pure-menu-link"
-            , onClick (ChangeProgram name)
+    li [ class "urm-list__item" ]
+        [ span [ class "preset-programs__name" ]
+            [ a
+                [ href ("#" ++ name), onClick (ChangeProgram name) ]
+                [ text name ]
             ]
-            [ text name ]
+        , span [ class "preset-programs__description" ] [ text "A description" ]
         ]
