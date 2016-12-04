@@ -1,7 +1,6 @@
 module Main exposing (..)
 
 import UrmVisualiser exposing (UrmVisualiser, Msg(..), update)
-import Html.App as App
 import Html exposing (Html)
 import Html.Attributes as Attrs
 import Html.Events as Events
@@ -12,9 +11,9 @@ import UrmProgramView
 import Time
 
 
-main : Program Never
+main : Program Never UrmVisualiser Msg
 main =
-    App.program
+    Html.program
         { init = init
         , view = view
         , update = UrmVisualiser.update
