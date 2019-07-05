@@ -1,8 +1,8 @@
 module Programs exposing (get, names)
 
-import Urm exposing (Instruction(..))
-import Dict exposing (Dict)
 import Array exposing (Array)
+import Dict exposing (Dict)
+import Urm exposing (Instruction(..))
 
 
 zeroOutRegister : Int -> Int -> Urm.Instruction
@@ -11,11 +11,11 @@ zeroOutRegister register cmdIndex =
         cmdIndexWhenDone =
             cmdIndex + 1
     in
-        Deb register cmdIndex cmdIndexWhenDone
+    Deb register cmdIndex cmdIndexWhenDone
 
 
 {-| Move the contents of register 1 to register 2,
-    zeroing out register 2 first
+zeroing out register 2 first
 -}
 move : ( Array Int, Array Urm.Instruction )
 move =
@@ -25,19 +25,19 @@ move =
 
         program =
             Array.fromList
-                [ (zeroOutRegister 2 1)
+                [ zeroOutRegister 2 1
                 , Deb 1 3 4
                 , Inc 2 2
                 , Exit
                 ]
     in
-        ( registers, program )
+    ( registers, program )
 
 
 {-| Subtract the value of register 4 from register 3, putting
-    the result in register 0 and using register 2 as a flag
-    to indicate negative values. Zero in register 2 indicates
-    the value in register 1 is positive, 1 indicates negative
+the result in register 0 and using register 2 as a flag
+to indicate negative values. Zero in register 2 indicates
+the value in register 1 is positive, 1 indicates negative
 -}
 subtract : Int -> Int -> ( Array Int, Array Urm.Instruction )
 subtract a b =
@@ -47,8 +47,8 @@ subtract a b =
 
         program =
             Array.fromList
-                [ (zeroOutRegister 1 1)
-                , (zeroOutRegister 2 2)
+                [ zeroOutRegister 1 1
+                , zeroOutRegister 2 2
                 , Deb 4 4 5
                 , Deb 3 3 7
                 , Deb 3 6 11
@@ -60,11 +60,11 @@ subtract a b =
                 , Exit
                 ]
     in
-        ( registers, program )
+    ( registers, program )
 
 
 {-| Multiplies the value of register 3 by the value of
-    register 4
+register 4
 -}
 multiplication : ( Array Int, Array Urm.Instruction )
 multiplication =
@@ -74,8 +74,8 @@ multiplication =
 
         program =
             Array.fromList
-                [ (zeroOutRegister 1 1)
-                , (zeroOutRegister 2 2)
+                [ zeroOutRegister 1 1
+                , zeroOutRegister 2 2
                 , Deb 4 4 9
                 , Deb 2 5 6
                 , Inc 3 4
@@ -85,11 +85,11 @@ multiplication =
                 , Exit
                 ]
     in
-        ( registers, program )
+    ( registers, program )
 
 
 {-| Copy the contents of register 1 to register 2,
-    zeroing out register 2 first
+zeroing out register 2 first
 -}
 copy : ( Array Int, Array Urm.Instruction )
 copy =
@@ -109,7 +109,7 @@ copy =
                 , Exit
                 ]
     in
-        ( registers, program )
+    ( registers, program )
 
 
 incrementTwice : ( Array Int, Array Urm.Instruction )
@@ -125,7 +125,7 @@ incrementTwice =
                 , Exit
                 ]
     in
-        ( registers, program )
+    ( registers, program )
 
 
 decrementTwice : ( Array Int, Array Urm.Instruction )
@@ -140,7 +140,7 @@ decrementTwice =
                 , Exit
                 ]
     in
-        ( registers, program )
+    ( registers, program )
 
 
 addition : ( Array Int, Array Urm.Instruction )
@@ -158,7 +158,7 @@ addition =
                 , Exit
                 ]
     in
-        ( registers, program )
+    ( registers, program )
 
 
 nonDestructiveAddition : ( Array Int, Array Urm.Instruction )
@@ -182,7 +182,7 @@ nonDestructiveAddition =
                 , Exit
                 ]
     in
-        ( registers, program )
+    ( registers, program )
 
 
 programs : Dict String ( Array Int, Array Urm.Instruction )
@@ -194,8 +194,8 @@ programs =
         , ( "decrementTwice", decrementTwice )
         , ( "addition", addition )
         , ( "nonDestructiveAddition", nonDestructiveAddition )
-        , ( "subtractSimple", (subtract 9 5) )
-        , ( "subtractNegative", (subtract 5 9) )
+        , ( "subtractSimple", subtract 9 5 )
+        , ( "subtractNegative", subtract 5 9 )
         , ( "multiplication", multiplication )
         ]
 

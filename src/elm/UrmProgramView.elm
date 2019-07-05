@@ -1,10 +1,10 @@
 module UrmProgramView exposing (root)
 
+import Array exposing (Array)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Urm exposing (Instruction(..))
 import UrmVisualiser exposing (Msg)
-import Array exposing (Array)
 
 
 root : Urm.State -> Html Msg
@@ -29,10 +29,10 @@ programView program programCounter =
             Array.toList program
                 |> List.indexedMap (commandRow nextCmdIndex)
     in
-        table [ class "pure-table" ]
-            [ thead [] [ tr [] header ]
-            , tbody [] commands
-            ]
+    table [ class "pure-table" ]
+        [ thead [] [ tr [] header ]
+        , tbody [] commands
+        ]
 
 
 commandRow : Int -> Int -> Instruction -> Html Msg
@@ -48,7 +48,7 @@ commandRow nextIndex index cmd =
         rowCssClass =
             classList [ ( "next-command", nextIndex == index ) ]
     in
-        tr [ rowCssClass ] tdsHtml
+    tr [ rowCssClass ] tdsHtml
 
 
 commandRowValues : Int -> Instruction -> List String
@@ -60,12 +60,12 @@ commandRowValues index cmd =
                     [ "Exit", "", "", "" ]
 
                 Inc register next ->
-                    [ "Inc", (toString register), (toString next), "" ]
+                    [ "Inc", String.fromInt register, String.fromInt next, "" ]
 
                 Deb register next branch ->
-                    [ "Deb", (toString register), (toString next), (toString branch) ]
+                    [ "Deb", String.fromInt register, String.fromInt next, String.fromInt branch ]
 
         instructionIndex =
-            toString (index + 1)
+            String.fromInt (index + 1)
     in
-        instructionIndex :: values
+    instructionIndex :: values

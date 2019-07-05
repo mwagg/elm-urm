@@ -1,4 +1,4 @@
-module Urm exposing (init, step, run, Instruction(..), State, empty)
+module Urm exposing (Instruction(..), State, empty, init, run, step)
 
 import Array exposing (Array)
 
@@ -37,10 +37,11 @@ run state =
         newState =
             step state
     in
-        if newState.exited then
-            newState
-        else
-            run newState
+    if newState.exited then
+        newState
+
+    else
+        run newState
 
 
 step : State -> State
@@ -49,31 +50,32 @@ step state =
         cmd =
             nextInstruction state
     in
-        case cmd of
-            Exit ->
-                { state | exited = True }
+    case cmd of
+        Exit ->
+            { state | exited = True }
 
-            Inc register nextInstr ->
-                { state
-                    | programCounter = nextInstr
-                    , registers = incrementRegister state.registers register
-                }
+        Inc register nextInstr ->
+            { state
+                | programCounter = nextInstr
+                , registers = incrementRegister state.registers register
+            }
 
-            Deb register successIndex branchIndex ->
-                let
-                    ( newRegisters, decremented ) =
-                        decrementRegister state.registers register
+        Deb register successIndex branchIndex ->
+            let
+                ( newRegisters, decremented ) =
+                    decrementRegister state.registers register
 
-                    nextInstr =
-                        if decremented then
-                            successIndex
-                        else
-                            branchIndex
-                in
-                    { state
-                        | programCounter = nextInstr
-                        , registers = newRegisters
-                    }
+                nextInstr =
+                    if decremented then
+                        successIndex
+
+                    else
+                        branchIndex
+            in
+            { state
+                | programCounter = nextInstr
+                , registers = newRegisters
+            }
 
 
 incrementRegister : Array Int -> Int -> Array Int
@@ -86,7 +88,7 @@ incrementRegister registers index =
             Array.get arrayIndex registers
                 |> Maybe.withDefault 0
     in
-        Array.set arrayIndex (value + 1) registers
+    Array.set arrayIndex (value + 1) registers
 
 
 decrementRegister : Array Int -> Int -> ( Array Int, Bool )
@@ -105,10 +107,11 @@ decrementRegister registers index =
         newValue =
             if decremented then
                 value - 1
+
             else
                 0
     in
-        ( Array.set arrayIndex newValue registers, decremented )
+    ( Array.set arrayIndex newValue registers, decremented )
 
 
 nextInstruction : State -> Instruction
@@ -117,5 +120,5 @@ nextInstruction state =
         cmdIndex =
             state.programCounter - 1
     in
-        Array.get cmdIndex state.program
-            |> Maybe.withDefault Exit
+    Array.get cmdIndex state.program
+        |> Maybe.withDefault Exit

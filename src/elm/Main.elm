@@ -1,19 +1,24 @@
-module Main exposing (..)
+module Main exposing (header, init, machineVisualisationView, main, programControl, subscriptions, view)
 
-import UrmVisualiser exposing (UrmVisualiser, Msg(..), update)
+import Browser
 import Html exposing (Html)
 import Html.Attributes as Attrs
 import Html.Events as Events
-import Urm
 import PresetProgramsView
-import UrmRegistersView
-import UrmProgramView
 import Time
+import Urm
+import UrmProgramView
+import UrmRegistersView
+import UrmVisualiser exposing (Msg(..), UrmVisualiser, update)
 
 
-main : Program Never UrmVisualiser Msg
+type alias Flags =
+    ()
+
+
+main : Program Flags UrmVisualiser Msg
 main =
-    Html.program
+    Browser.element
         { init = init
         , view = view
         , update = UrmVisualiser.update
@@ -21,8 +26,8 @@ main =
         }
 
 
-init : ( UrmVisualiser, Cmd Msg )
-init =
+init : Flags -> ( UrmVisualiser, Cmd Msg )
+init _ =
     ( { machineState = Urm.empty
       , autoStep = False
       }
@@ -32,7 +37,7 @@ init =
 
 subscriptions : UrmVisualiser -> Sub Msg
 subscriptions model =
-    Time.every (100 * Time.millisecond) Tick
+    Time.every 100 Tick
 
 
 

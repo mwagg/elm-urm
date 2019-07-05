@@ -1,10 +1,10 @@
 module UrmRegistersView exposing (root)
 
+import Array exposing (Array)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Urm
 import UrmVisualiser exposing (Msg)
-import Array exposing (Array)
 
 
 root : Urm.State -> Html Msg
@@ -15,14 +15,14 @@ root state =
                 [ ( "urm-current-state", True )
                 ]
     in
-        div [ classes ]
-            [ div
-                [ class "pure-u" ]
-                [ h3 []
-                    [ text "Registers" ]
-                , registersView state.registers
-                ]
+    div [ classes ]
+        [ div
+            [ class "pure-u" ]
+            [ h3 []
+                [ text "Registers" ]
+            , registersView state.registers
             ]
+        ]
 
 
 registersView : Array Int -> Html Msg
@@ -32,17 +32,17 @@ registersView registers =
             List.repeat 10 0
                 |> List.indexedMap
                     (\i _ ->
-                        th [] [ text (toString (i + 1)) ]
+                        th [] [ text (String.fromInt (i + 1)) ]
                     )
 
         registerValue =
-            \v -> td [] [ text (toString v) ]
+            \v -> td [] [ text (String.fromInt v) ]
 
         registerValues =
             Array.map registerValue registers
                 |> Array.toList
     in
-        table [ class "pure-table" ]
-            [ thead [] [ tr [] registerNumbers ]
-            , tbody [] [ tr [] registerValues ]
-            ]
+    table [ class "pure-table" ]
+        [ thead [] [ tr [] registerNumbers ]
+        , tbody [] [ tr [] registerValues ]
+        ]

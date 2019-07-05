@@ -1,10 +1,10 @@
 module PresetProgramsView exposing (root)
 
-import Programs
-import UrmVisualiser exposing (Msg(ChangeProgram))
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Programs
+import UrmVisualiser exposing (Msg(..))
 
 
 root : Html Msg
@@ -25,7 +25,7 @@ root =
             div [ class "pure-menu" ]
                 [ ul [ class "pure-menu-list" ] programsHtml ]
     in
-        Html.div [ classes ] [ heading, menu ]
+    Html.div [ classes ] [ heading, menu ]
 
 
 programView : String -> Html Msg

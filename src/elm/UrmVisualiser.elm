@@ -1,8 +1,9 @@
-module UrmVisualiser exposing (UrmVisualiser, update, Msg(..))
+module UrmVisualiser exposing (Msg(..), UrmVisualiser, update)
 
-import Urm
 import Programs
-import Time exposing (Time)
+import Time 
+import Urm
+
 
 
 -- UrmVisualiser
@@ -23,7 +24,7 @@ type Msg
     | Step
     | Play
     | Stop
-    | Tick Time
+    | Tick Time.Posix
 
 
 update : Msg -> UrmVisualiser -> ( UrmVisualiser, Cmd Msg )
@@ -44,6 +45,7 @@ update msg model =
         Tick time ->
             if model.autoStep == False then
                 ( model, Cmd.none )
+
             else
                 ( { model | machineState = Urm.step model.machineState }, Cmd.none )
 
@@ -60,4 +62,4 @@ changeProgram model programName =
                 , autoStep = False
             }
     in
-        ( newUrmVisualiser, Cmd.none )
+    ( newUrmVisualiser, Cmd.none )
